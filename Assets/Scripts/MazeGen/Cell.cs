@@ -21,7 +21,7 @@ namespace MazeGen
             connectedCells[Direction.West] = Maze.InvalidCell;
         }
 
-        public void ConectsTo(ref Cell to, Direction direction)
+        public void ConectsTo(Cell to, Direction direction)
         {
             connectedCells[direction] = to.Id;
             to.connectedCells[direction.Opposite()] = Id;

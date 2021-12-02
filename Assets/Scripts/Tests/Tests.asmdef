@@ -1,0 +1,13 @@
+{
+    "name": "Tests",
+    "references" : [
+        "MazeGen"
+    ],
+
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ]
+}

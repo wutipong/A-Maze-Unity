@@ -20,7 +20,7 @@ namespace MazeGen
                 var fromCell = maze[from];
                 var toCell = maze[to];
 
-                fromCell.ConectsTo(ref toCell, direction);
+                fromCell.ConectsTo(toCell, direction);
 
             }
 
