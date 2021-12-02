@@ -10,7 +10,7 @@ namespace MazeGen
     {
         public int Id { get; internal set; }
 
-        private Dictionary<Direction, int> connectedCells;
+        private readonly Dictionary<Direction, int> connectedCells = new();
         public Cell(int id)
         {
             Id = id;
@@ -21,10 +21,15 @@ namespace MazeGen
             connectedCells[Direction.West] = Maze.InvalidCell;
         }
 
-        void ConectsTo(ref Cell to, Direction direction)
+        public void ConectsTo(ref Cell to, Direction direction)
         {
             connectedCells[direction] = to.Id;
             to.connectedCells[direction.Opposite()] = Id;
+        }
+
+        public int ConnectedCellID(Direction direction)
+        {
+            return connectedCells[direction];
         }
     }
 }

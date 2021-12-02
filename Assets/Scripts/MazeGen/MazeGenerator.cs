@@ -10,7 +10,21 @@ namespace MazeGen
     {
         public static Maze Generate(int columns, int rows)
         {
-            return new Maze()
+            Maze maze =  new(columns, rows);
+            MazeContext ctx = new (maze);
+
+            while(ctx.CurrentSetCount != 1)
+            {
+                var (from, to, direction, opposite) = ctx.RandomJoin();
+
+                var fromCell = maze[from];
+                var toCell = maze[to];
+
+                fromCell.ConectsTo(ref toCell, direction);
+
+            }
+
+            return maze;
         }
     }
 }

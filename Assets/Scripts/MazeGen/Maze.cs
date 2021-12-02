@@ -13,7 +13,7 @@ namespace MazeGen
         public int Columns { get; private set; }
         public int Rows { get; private set; }
 
-        public int CellCounts { get { return Rows * Columns; } }
+        public int CellCount { get { return Rows * Columns; } }
 
         private Cell[] cells;
 
@@ -24,7 +24,7 @@ namespace MazeGen
             Columns = columns;
             Rows = rows;
 
-            cells = new Cell[CellCounts];
+            cells = new Cell[CellCount];
 
             for(int i = 0; i < cells.Length; i++)
             {
@@ -33,7 +33,7 @@ namespace MazeGen
         }
 
         public int AdjacentCellID(int id, Direction direction) {
-            if (id < 0 || id >= CellCounts)
+            if (id < 0 || id >= CellCount)
                 return InvalidCell;
 
             var (x, y) = CellPosition(id);
