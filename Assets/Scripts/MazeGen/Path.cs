@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,7 @@ namespace MazeGen
         public Direction FromDirection { get; internal set; }
         public Direction ToDirection { get; internal set; }
     }
-    public class Path
+    public class Path : IEnumerable<PathNode>
     {
         private List<PathNode> nodes = new List<PathNode>();
 
@@ -31,7 +32,8 @@ namespace MazeGen
                 _ => Direction.Invalid,
             };
         }
-        public static Path DepthFirstSearch(Maze maze, int from, int to)
+        public static Path DepthFirstSearch(Maze maze, int from, int to, ILogger? logger = null)
+        
         {
             Path path = new();
             path.nodes.Add(new PathNode
@@ -47,14 +49,20 @@ namespace MazeGen
             {
                 var currentIndex = path.nodes.Count-1;
                 var current = path.nodes[currentIndex];
+                logger?.Write(string.Format("current: {0}", current.Cell));
                 if (current.Cell == to) break;
 
                 var cell = maze[current.Cell];
                 current.ToDirection = Next(current.ToDirection);
+
+                logger?.Write(string.Format("move in {0} direction", current.ToDirection));
+
                 path.nodes[currentIndex] = current;
 
                 if(current.ToDirection == Direction.Invalid)
                 {
+                    logger?.Write("move back");
+
                     path.nodes.RemoveAt(currentIndex);
                     continue;
                 }
@@ -80,7 +88,17 @@ namespace MazeGen
                 path.nodes.Add(next);
             }
 
-            return null;
+            return path;
+        }
+
+        public IEnumerator<PathNode> GetEnumerator()
+        {
+            return ((IEnumerable<PathNode>)nodes).GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return ((IEnumerable)nodes).GetEnumerator();
         }
     }
 }

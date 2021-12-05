@@ -46,26 +46,25 @@ namespace MazeGen
             var toSet = disjointSets[to];
             var fromSet = disjointSets[from];
 
-            if (toSet.Overlaps(fromSet)) return false;
+            if(toSet.Overlaps(fromSet)) return false;
+            
             foreach (var c in fromSet)
             {
                 toSet.Add(c);
+                disjointSets[c] = toSet;
             }
-
-            disjointSets[from] = disjointSets[to];
 
             return true;
         }
 
-        private static int RandomCell(int cellCount)
+        private static int RandomCell(Random random, int cellCount)
         {
-            return new Random().Next(cellCount);
+            return random.Next(cellCount);
         }
 
-        private static Direction RandomDirection()
+        private static Direction RandomDirection(Random random)
         {
-            int random = new Random().Next(4);
-            return random switch
+            return random.Next(4) switch
             {
                 0 => Direction.North,
                 1 => Direction.South,
@@ -75,19 +74,19 @@ namespace MazeGen
             };
         }
 
-        internal (int from, int to, Direction direction, Direction opposite) RandomJoin()
+        internal (int from, int to, Direction direction) RandomJoin(Random random)
         {
             while (true)
             {
-                var fromCell = RandomCell(CellCount);
-                var direction = RandomDirection();
+                var fromCell = RandomCell(random, CellCount);
+                var direction = RandomDirection(random);
 
                 var toCell = maze.AdjacentCellID(fromCell, direction);
 
                 if (TryJoinSet(toCell, fromCell))
                 {
                     CurrentSetCount--;
-                    return (fromCell, toCell, direction, direction.Opposite());
+                    return (fromCell, toCell, direction);
                 }
             }
         }

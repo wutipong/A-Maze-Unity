@@ -3035,6 +3035,8 @@ MonoBehaviour:
   SouthConnected: 0
   EastConnected: 0
   WestConnected: 0
+  Width: 10
+  Height: 10
 --- !u!1 &4360841703252846641
 GameObject:
   m_ObjectHideFlags: 0

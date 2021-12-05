@@ -11,6 +11,9 @@ public class CellBehavior : MonoBehaviour
     public bool EastConnected = false;
     public bool WestConnected = false;
 
+    public float Width;
+    public float Height;
+
     // Start is called before the first frame update
     void Start()
     {
